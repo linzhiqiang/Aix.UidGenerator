@@ -1,5 +1,6 @@
 # Aix.UidGenerator
 
+```
 var options = new DefaultUIDOptions
 {
     WorkId = 2,
@@ -11,3 +12,5 @@ var options = new DefaultUIDOptions
 IUIDGenerator uIDGenerator = DefaultUIDGenerator.Create(options);
 var uid = uIDGenerator.GetUID();
 var uidStr = uIDGenerator.ParseUID(uid);
+
+```
