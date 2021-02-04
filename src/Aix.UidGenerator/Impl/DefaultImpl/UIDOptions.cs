@@ -4,7 +4,10 @@ using System.Text;
 
 namespace Aix.UidGenerator
 {
-  public class DefaultUIDOptions
+    /// <summary>
+    /// 
+    /// </summary>
+  public class UIDOptions
     {
         /// <summary>
         /// workid的值
@@ -26,6 +29,9 @@ namespace Aix.UidGenerator
         /// </summary>
         public int SequenceBit { get; set; } = 10;
 
+        /// <summary>
+        /// 时间戳的开始时间
+        /// </summary>
         public DateTime EpochDateTime { get; set; } = new DateTime(2021, 1, 27);
     }
 }

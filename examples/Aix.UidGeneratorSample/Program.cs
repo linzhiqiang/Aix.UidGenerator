@@ -1,5 +1,6 @@
 ﻿using Aix.UidGenerator;
 using Aix.UidGenerator.Utils;
+using Aix.UidGeneratorSample.Common;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -16,28 +17,32 @@ namespace Aix.UidGeneratorSample
             //System.Convert.ToInt64(bits, 2);
             //var str1=   System.Convert.ToString(BitUtils.MaxVaue(41), 2);
             var mask = BitUtils.MaxVaue(12) << 10;
-            var workdId = (761064115406849 & mask)   >> 10; //111111111111
+            var workdId = (761064115406849 & mask) >> 10; //111111111111
             Console.WriteLine("UID 测试：");
 
-           // DefaultUIDGeneratorTest();
-            IPUIDGeneratorTest();
+            DefaultUIDGeneratorTest();
+            // IPUIDGeneratorTest();
 
             Console.Read();
         }
 
         static void DefaultUIDGeneratorTest()
         {
-            var options = new DefaultUIDOptions
+            var ipKey = IPUtils2.IPToInt() & 0x03ff;// ip后10位
+            var processKey = 0; //进程标识
+            var workId = (ipKey << 2) + processKey;  // 采用ip后10位 + 2位的序号(区分进程)
+            var options = new UIDOptions
             {
-                WorkId = 2,
+                WorkId = (int)workId,
                 WorkIdBit = 12,
                 SequenceBit = 8,
                 TimeCheckBit = 2,
                 EpochDateTime = new DateTime(2021, 1, 27)
             };
-            IUIDGenerator uIDGenerator = DefaultUIDGenerator.Create(options);
+
+            IUIDGenerator uIDGenerator = UIDGeneratorFactory.Instance.CreateUIDGenerator(options);
             var uid1 = uIDGenerator.GetUID();
-            var s = uIDGenerator.ParseUID(uid1);
+            var uid1Str = uIDGenerator.ParseUID(uid1);
             HashSet<long> set = new HashSet<long>();
             List<string> uidStr = new List<string>();
             Stopwatch stopwatch = new Stopwatch();
@@ -66,8 +71,8 @@ namespace Aix.UidGeneratorSample
             {
                 EpochDateTime = new DateTime(2021, 1, 27)
             };
-            IUIDGenerator uIDGenerator = IPUIDGenerator.Create(options);
-           
+            IUIDGenerator uIDGenerator = UIDGeneratorFactory.Instance.CreateUIDGenerator(options);
+
             HashSet<long> set = new HashSet<long>();
             List<string> uidStr = new List<string>();
             Stopwatch stopwatch = new Stopwatch();
@@ -75,7 +80,7 @@ namespace Aix.UidGeneratorSample
             for (int i = 0; i < 2000; i++)
             {
                 var uid = uIDGenerator.GetUID();
-               
+
                 if (set.Contains(uid))
                 {
                     Console.WriteLine(uid);

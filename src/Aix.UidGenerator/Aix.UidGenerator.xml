@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Aix.UidGenerator</name>
+    </assembly>
+    <members>
+        <member name="T:Aix.UidGenerator.UIDGeneratorImpl">
+            <summary>
+            1+41+10+2+10
+            1: 第一位符号位  2：41位毫秒时间戳  3：10位workid  4:2位回拨位  5: 10位顺序号
+            workid可以考虑 数据库(biz_name,ip,port)+本地文件实现  表里没有就注册一条返回自增id作为workid，存在使用老的id。 可以做个本地文件优化（可有可无）
+            每秒可以100万个，如果没有这么大的并发量 最后一位序号可以减少4到8位
+            </summary>
+        </member>
+        <member name="M:Aix.UidGenerator.UIDGeneratorImpl.getUIDInner">
+            <summary>
+            
+            </summary>
+            <param name="epochDateTime"></param>
+        </member>
+        <member name="M:Aix.UidGenerator.UIDGeneratorImpl.WaitNextMillisecond">
+            <summary>
+            自旋等待到下一毫秒
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Aix.UidGenerator.UIDOptions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Aix.UidGenerator.UIDOptions.WorkId">
+            <summary>
+            workid的值
+            </summary>
+        </member>
+        <member name="P:Aix.UidGenerator.UIDOptions.WorkIdBit">
+            <summary>
+            workid的位数 默认10位
+            </summary>
+        </member>
+        <member name="P:Aix.UidGenerator.UIDOptions.TimeCheckBit">
+            <summary>
+            时间回拨位数 默认2位 不需要时设置为0
+            </summary>
+        </member>
+        <member name="P:Aix.UidGenerator.UIDOptions.SequenceBit">
+            <summary>
+            序号的位数 默认10位
+            </summary>
+        </member>
+        <member name="P:Aix.UidGenerator.UIDOptions.EpochDateTime">
+            <summary>
+            时间戳的开始时间
+            </summary>
+        </member>
+        <member name="T:Aix.UidGenerator.UIDGeneratorIPImpl">
+            <summary>
+            1+29+15+2+16
+            1: 第一位符号位  2：29位秒(十几年吧)  3：15位序号  4:2位回拨位  5: 16位ip（后2位数字） 可以变为 10位ip+6位
+            https://www.xiaocainiao.net/2019/07/31/29.html
+            </summary>
+        </member>
+        <member name="T:Aix.UidGenerator.IUIDGenerator">
+            <summary>
+            uid生成器接口 默认设置 1(符号位)+41(毫秒时间戳)+10(机器位)+2(时间回拨位)+10(同一毫秒内递增序号)   
+            可以灵活调整机器位和递增序号的位数
+            </summary>
+        </member>
+        <member name="M:Aix.UidGenerator.IUIDGenerator.GetUID">
+            <summary>
+            获取一个新的uid
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Aix.UidGenerator.IUIDGenerator.ParseUID(System.Int64)">
+            <summary>
+            解析id
+            </summary>
+            <param name="uid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aix.UidGenerator.UIDGeneratorFactory.CreateUIDGenerator(Aix.UidGenerator.UIDOptions)">
+            <summary>
+            创建UID生成器
+            </summary>
+            <param name="options"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aix.UidGenerator.UIDGeneratorFactory.CreateUIDGenerator(Aix.UidGenerator.IPUIDOptions)">
+            <summary>
+            创建UID生成器 1+29+15+2+16  1: 第一位符号位  2：29位秒(十几年吧)  3：15位序号  4:2位回拨位  5: 16位ip（后2位数字） 可以变为 10位ip+6位
+            </summary>
+            <param name="options"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aix.UidGenerator.Utils.BitUtils.MaxVaue(System.Int32)">
+            <summary>
+            n位二进制最大值
+            </summary>
+            <param name="bitCount"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aix.UidGenerator.Utils.IPUtils.GetLocalIP">
+            <summary>
+            获取本机ip
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

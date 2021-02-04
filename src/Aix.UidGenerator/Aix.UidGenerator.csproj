@@ -2,6 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Description>UidGenerator 默认设置 1(符号位)+41(毫秒时间戳)+10(机器位)+2(时间回拨位)+10(同一毫秒内递增序号) 可进行灵活调整</Description>
+    <Version>1.0.1</Version>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>F:\github\Aix\Aix.UidGenerator\src\Aix.UidGenerator\Aix.UidGenerator.xml</DocumentationFile>
   </PropertyGroup>
 
 </Project>

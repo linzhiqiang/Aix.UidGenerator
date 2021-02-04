@@ -9,7 +9,7 @@ namespace Aix.UidGenerator
     /// 1: 第一位符号位  2：29位秒(十几年吧)  3：15位序号  4:2位回拨位  5: 16位ip（后2位数字） 可以变为 10位ip+6位
     /// https://www.xiaocainiao.net/2019/07/31/29.html
     /// </summary>
-    public class IPUIDGenerator : IUIDGenerator
+    public class UIDGeneratorIPImpl : IUIDGenerator
     {
         long LastTimestamp = 0;
         int TimestampBit = 29;//占的位数
@@ -31,23 +31,11 @@ namespace Aix.UidGenerator
         int IpShift = 0;
         long MaxIp;
 
-        static object UIDLock = new object();
+   
         DateTime EpochDateTime = new DateTime(2021, 1, 1);
+        static object UIDLock = new object();
 
-        private static IUIDGenerator Isntance;
-        public static IUIDGenerator Create(IPUIDOptions options)
-        {
-            lock (UIDLock)
-            {
-                if (Isntance == null)
-                {
-                    Isntance = new IPUIDGenerator(options);
-                }
-            }
-            return Isntance;
-        }
-
-        private IPUIDGenerator(IPUIDOptions options)
+        internal UIDGeneratorIPImpl(IPUIDOptions options)
         {
             EpochDateTime = options.EpochDateTime;
 

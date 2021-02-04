@@ -26,7 +26,7 @@ namespace Aix.UidGenerator
     /// workid可以考虑 数据库(biz_name,ip,port)+本地文件实现  表里没有就注册一条返回自增id作为workid，存在使用老的id。 可以做个本地文件优化（可有可无）
     /// 每秒可以100万个，如果没有这么大的并发量 最后一位序号可以减少4到8位
     /// </summary>
-    public class DefaultUIDGenerator : IUIDGenerator
+    public class UIDGeneratorImpl : IUIDGenerator
     {
         long LastTimestamp = 0;//上一次的时间戳
         int TimestampBit = 41;//占的位数
@@ -51,21 +51,7 @@ namespace Aix.UidGenerator
         static object UIDLock = new object();
         DateTime EpochDateTime = new DateTime(2021, 1, 1);
 
-
-        private static IUIDGenerator Isntance;
-        public static IUIDGenerator Create(DefaultUIDOptions options)
-        {
-            lock (UIDLock)
-            {
-                if (Isntance == null)
-                {
-                    Isntance = new DefaultUIDGenerator(options);
-                }
-            }
-            return Isntance;
-        }
-
-        private DefaultUIDGenerator(DefaultUIDOptions options)
+        internal UIDGeneratorImpl(UIDOptions options)
         {
             ValidOptions(options);
 
@@ -92,7 +78,7 @@ namespace Aix.UidGenerator
             }
         }
 
-        private void ValidOptions(DefaultUIDOptions options)
+        private void ValidOptions(UIDOptions options)
         {
             if (options.WorkIdBit <= 0) throw new Exception("WorkIdBit不能小于等于0");
             if (options.SequenceBit <= 0) throw new Exception("SequenceBit不能小于等于0");
