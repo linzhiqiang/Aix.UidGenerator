@@ -1,9 +1,9 @@
 # Aix.UidGenerator
 
 ```
-var ipKey = IPUtils2.IPToInt() & 0x03ff;// ipºó10Î»
-var processKey = 0; //½ø³Ì±êÊ¶
-var workId = (ipKey << 2) + processKey;  // ²ÉÓÃipºó10Î» + 2Î»µÄÐòºÅ(Çø·Ö½ø³Ì)
+var ipKey = IPUtils2.IPToInt() & 0x03ff;// ipåŽ10ä½
+var processKey = 0; //è¿›ç¨‹æ ‡è¯†
+var workId = (ipKey << 2) + processKey;  // é‡‡ç”¨ipåŽ10ä½ + 2ä½çš„åºå·(åŒºåˆ†è¿›ç¨‹)
 var options = new UIDOptions
 {
 	WorkId = (int)workId,
@@ -12,7 +12,7 @@ var options = new UIDOptions
 	TimeCheckBit = 2,
 	EpochDateTime = new DateTime(2021, 1, 27)
 };
-IUIDGenerator uIDGenerator = DefaultUIDGenerator.Create(options);
+IUIDGenerator uIDGenerator = UIDGeneratorFactory.Instance.CreateUIDGenerator(options);
 var uid = uIDGenerator.GetUID();
 var uidStr = uIDGenerator.ParseUID(uid);
 
