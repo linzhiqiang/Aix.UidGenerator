@@ -85,6 +85,10 @@ namespace Aix.UidGenerator
             if (options.WorkIdBit + options.TimeCheckBit + options.SequenceBit != 22) throw new Exception("WorkIdBit+TimeCheckBit+SequenceBit=24");
         }
 
+        /// <summary>
+        /// 获取uuid
+        /// </summary>
+        /// <returns></returns>
         public long GetUID()
         {
             lock (UIDLock)
@@ -99,7 +103,7 @@ namespace Aix.UidGenerator
             var workdId = (uid & (MaxWorkId << WorkIdShift)) >> WorkIdShift;
             var timestamp = uid >> TimestampShift; //(uid & (MaxTimestamp << TimestampShift)) >> TimestampShift;
             var datetime = TimeStampToDateTime(timestamp);
-            return $"{uid}: timestamp={datetime.ToString("yyyy-MM-dd HH:mm:ss fff")},workdId={workdId},sequence={sequence}" ;
+            return $"{uid}: workdId={workdId},timestamp={datetime.ToString("yyyy-MM-dd HH:mm:ss fff")},sequence={sequence}" ;
         }
 
         /// <summary>
@@ -161,6 +165,7 @@ namespace Aix.UidGenerator
             long timeStamp = GetTimeStamp();
             while (timeStamp <= this.LastTimestamp)
             {
+                Console.WriteLine("自旋");
                 timeStamp = GetTimeStamp();
             }
             return timeStamp;

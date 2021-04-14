@@ -12,6 +12,12 @@
             每秒可以100万个，如果没有这么大的并发量 最后一位序号可以减少4到8位
             </summary>
         </member>
+        <member name="M:Aix.UidGenerator.UIDGeneratorImpl.GetUID">
+            <summary>
+            获取uuid
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Aix.UidGenerator.UIDGeneratorImpl.getUIDInner">
             <summary>
             
